@@ -51,8 +51,6 @@ frontend/dist/
 
 # Test reports
 coverage/
-Vulnerability Test Results/E2E_Test_Results.xlsx
-Vulnerability Test Results/Security_Test_Results.xlsx
 
 # Firebase config files that might contain secrets
 firebase-debug.log
