@@ -1,0 +1,46 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "evidence",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "case_id", "order": "ASCENDING" },
+        { "fieldPath": "collected_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "timeline_events",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "case_id", "order": "ASCENDING" },
+        { "fieldPath": "time", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "analyses",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "case_id", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "analyses",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "case_id", "order": "ASCENDING" },
+        { "fieldPath": "type", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "geo_markers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "case_id", "order": "ASCENDING" },
+        { "fieldPath": "type", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

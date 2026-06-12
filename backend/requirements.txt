@@ -1,0 +1,51 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic[email]==2.9.2
+pydantic-settings==2.5.2
+email-validator==2.2.0
+python-jose[cryptography]==3.4.0  # VULN-031 fix: updated from 3.3.0 (CVE-2024-33663)
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.9
+motor==3.6.0
+pymongo==4.9.1
+python-dotenv==1.0.1
+httpx==0.27.2
+
+# Firebase Admin (token verification)
+firebase-admin==6.5.0
+
+# LLM router — Gemini Flash (free tier) + optional Ollama for local TinyLlama
+google-generativeai==0.8.3
+ollama==0.3.3
+
+# PDF / OCR for autopsy analyzer
+PyMuPDF==1.24.10
+pdfplumber==0.11.4
+Pillow==10.4.0
+easyocr==1.7.2
+numpy==2.1.1
+
+# Image analysis
+opencv-python-headless==4.10.0.84
+
+# AI / ML
+scikit-learn==1.5.2
+numpy==2.1.1
+pandas==2.2.3
+
+# NLP
+spacy==3.7.6
+
+# OCR / vision (optional heavy deps — comment out if not installed)
+# pytesseract==0.3.13
+# Pillow==10.4.0
+# opencv-python==4.10.0.84
+# pdfplumber==0.11.4
+
+# Embeddings & vector store (optional)
+# sentence-transformers==3.1.1
+# faiss-cpu==1.8.0.post1
+
+# Transformers (optional, large)
+# transformers==4.45.1
+# torch==2.4.1

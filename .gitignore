@@ -1,0 +1,61 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+jspm_packages/
+backend/venv/
+backend/.venv/
+venv/
+.venv/
+env/
+.env_workspace/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE and OS files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+.gemini/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Build directories
+dist/
+build/
+backend/dist/
+frontend/dist/
+
+# Test reports
+coverage/
+Vulnerability Test Results/E2E_Test_Results.xlsx
+Vulnerability Test Results/Security_Test_Results.xlsx
+
+# Firebase config files that might contain secrets
+firebase-debug.log
+firebase-debug.*.log
+*.firebase
+.firebase/
