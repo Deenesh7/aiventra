@@ -9,6 +9,8 @@ on:
 jobs:
   e2e-tests:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout code
@@ -53,3 +55,12 @@ jobs:
       with:
         name: E2E-Test-Results
         path: "Vulnerability Test Results/E2E_Test_Results.xlsx"
+
+    - name: Commit and Push Report to GitHub
+      if: always()
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add "Vulnerability Test Results/E2E_Test_Results.xlsx"
+        git commit -m "Auto-update E2E Test Report [skip ci]" || echo "No changes to commit"
+        git push
