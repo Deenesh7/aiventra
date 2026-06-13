@@ -1,0 +1,55 @@
+name: E2E Test Report
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install Frontend Dependencies
+      working-directory: ./frontend
+      run: npm install
+
+    - name: Start Frontend Server
+      working-directory: ./frontend
+      run: |
+        npm run dev &
+        npx wait-on http://localhost:5173
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Python Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install selenium openpyxl webdriver-manager
+
+    - name: Run E2E Selenium Tests
+      run: |
+        # Install xvfb to run Chrome without a display
+        sudo apt-get update
+        sudo apt-get install -y xvfb
+        # Run the Python script using xvfb-run
+        xvfb-run --auto-servernum python "Vulnerability Test Results/e2e_selenium_tests.py"
+
+    - name: Upload E2E Test Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: E2E-Test-Results
+        path: "Vulnerability Test Results/E2E_Test_Results.xlsx"
