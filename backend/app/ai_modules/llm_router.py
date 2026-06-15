@@ -230,7 +230,29 @@ def complete(prompt: str, system: Optional[str] = None, max_tokens: int = 1500) 
     if cached:
         return {**cached, "cached": True, "inference_ms": int((time.time() - start) * 1000)}
 
-    # 1) Gemini
+    # 1) Ollama local
+    if _OLLAMA_READY:
+        try:
+            messages = []
+            if system:
+                messages.append({"role": "system", "content": system})
+            messages.append({"role": "user", "content": prompt})
+            response = ollama.chat(model=_OLLAMA_MODEL, messages=messages)
+            text = (response.get("message", {}).get("content") or "").strip()
+            if text:
+                out = {
+                    "text": text,
+                    "provider": "ollama",
+                    "model": _OLLAMA_MODEL,
+                    "inference_ms": int((time.time() - start) * 1000),
+                    "cached": False,
+                }
+                _cache.set(prompt, system, max_tokens, out)
+                return out
+        except Exception as e:
+            print(f"[llm] Ollama failed, falling through: {e}")
+
+    # 2) Gemini
     if _GEMINI_READY:
         try:
             content = prompt if not system else f"{system}\n\n{prompt}"
@@ -252,7 +274,7 @@ def complete(prompt: str, system: Optional[str] = None, max_tokens: int = 1500) 
         except Exception as e:
             print(f"[llm] Gemini failed, falling through: {e}")
 
-    # 2) Hugging Face Inference API
+    # 3) Hugging Face Inference API
     if _HF_READY:
         for model in (_HF_MODEL, _HF_FALLBACK_MODEL):
             text = _call_hf(prompt, system, max_tokens, model)
@@ -266,28 +288,6 @@ def complete(prompt: str, system: Optional[str] = None, max_tokens: int = 1500) 
                 }
                 _cache.set(prompt, system, max_tokens, out)
                 return out
-
-    # 3) Ollama local
-    if _OLLAMA_READY:
-        try:
-            messages = []
-            if system:
-                messages.append({"role": "system", "content": system})
-            messages.append({"role": "user", "content": prompt})
-            response = ollama.chat(model=_OLLAMA_MODEL, messages=messages)
-            text = (response.get("message", {}).get("content") or "").strip()
-            if text:
-                out = {
-                    "text": text,
-                    "provider": "ollama",
-                    "model": _OLLAMA_MODEL,
-                    "inference_ms": int((time.time() - start) * 1000),
-                    "cached": False,
-                }
-                _cache.set(prompt, system, max_tokens, out)
-                return out
-        except Exception as e:
-            print(f"[llm] Ollama failed, falling through: {e}")
 
     # 4) Templated fallback
     return {

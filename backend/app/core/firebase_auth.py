@@ -143,7 +143,10 @@ async def get_firebase_user(
             }
         except Exception as e:
             # fall through to public-key path
-            print(f"[firebase] admin verify failed ({e}); trying public-key fallback.")
+            err_msg = str(e)
+            if "default credentials" in err_msg.lower():
+                err_msg = "Application Default Credentials not configured (normal for dev)"
+            print(f"[firebase] admin verify: {err_msg}; using public-key fallback.")
 
     # Tier 3 — public-key verification
     claims = await _verify_with_public_keys(token)
