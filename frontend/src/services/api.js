@@ -50,6 +50,7 @@ export const reportsApi = {
     if (caseId) fd.append('case_id', caseId);
     const r = await apiClient.post('/reports/analyze', fd, {
       headers: { 'Content-Type': 'multipart/form-data' },
+      timeout: 180000, // Large PDF analysis can take a while on CPU
     });
     return r.data;
   },
@@ -71,7 +72,9 @@ export const timelineApi = {
 
 export const chatApi = {
   ask: async ({ query, case_id, history }) =>
-    (await apiClient.post('/assistant/ask', { query, case_id, history: history || [] })).data,
+    (await apiClient.post('/assistant/ask', { query, case_id, history: history || [] }, {
+      timeout: 180000, // Chat with RAG/LLM can be slow on CPU
+    })).data,
 };
 
 export const imageApi = {
@@ -80,6 +83,7 @@ export const imageApi = {
     fd.append('file', file);
     const r = await apiClient.post('/images/analyze', fd, {
       headers: { 'Content-Type': 'multipart/form-data' },
+      timeout: 180000, // Image/OpenCV scans can take a while
     });
     return r.data;
   },

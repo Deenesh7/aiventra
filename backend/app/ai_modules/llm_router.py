@@ -60,10 +60,12 @@ except Exception as e:
     print(f"[llm] httpx unavailable, HF disabled: {e}")
 
 # Ollama (local)
+_ollama_client = None
 try:
     import ollama  # type: ignore
     try:
-        ollama.list()
+        _ollama_client = ollama.Client(timeout=25.0)
+        _ollama_client.list()
         _OLLAMA_READY = True
         print(f"[llm] Ollama ready ({_OLLAMA_MODEL})")
     except Exception as e:
@@ -237,7 +239,7 @@ def complete(prompt: str, system: Optional[str] = None, max_tokens: int = 1500) 
             if system:
                 messages.append({"role": "system", "content": system})
             messages.append({"role": "user", "content": prompt})
-            response = ollama.chat(model=_OLLAMA_MODEL, messages=messages)
+            response = _ollama_client.chat(model=_OLLAMA_MODEL, messages=messages)
             text = (response.get("message", {}).get("content") or "").strip()
             if text:
                 out = {
