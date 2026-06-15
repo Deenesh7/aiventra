@@ -1,0 +1,48 @@
+name: security-testresults
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  security-tests:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Python Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install openpyxl
+
+    - name: Run Security Test Report Generation
+      run: |
+        python "Vulnerability Test Results/generate_excel.py"
+
+    - name: Upload Security Test Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-testresults
+        path: "Vulnerability Test Results/Security_Test_Results.xlsx"
+
+    - name: Commit and Push Security Report to GitHub
+      if: always()
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add "Vulnerability Test Results/Security_Test_Results.xlsx"
+        git commit -m "Auto-update Security Test Report [skip ci]" || echo "No changes to commit"
+        git push
