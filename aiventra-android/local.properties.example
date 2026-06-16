@@ -1,0 +1,11 @@
+## On first open in Android Studio or Antigravity:
+##   1. Copy this file to `local.properties` (without the .example)
+##   2. Set sdk.dir to your Android SDK path:
+##
+## Windows:  sdk.dir=C\:\\Users\\<YOU>\\AppData\\Local\\Android\\Sdk
+## macOS:    sdk.dir=/Users/<YOU>/Library/Android/sdk
+## Linux:    sdk.dir=/home/<YOU>/Android/Sdk
+##
+## Or just let the IDE auto-create local.properties on first sync —
+## it'll detect the SDK from ANDROID_HOME / ANDROID_SDK_ROOT.
+sdk.dir=
