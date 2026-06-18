@@ -12,6 +12,7 @@ import RiskAnomalies from './pages/RiskAnomalies';
 import ImageAnalysis from './pages/ImageAnalysis';
 import AIAssistant from './pages/AIAssistant';
 import Explainability from './pages/Explainability';
+import EvidenceLocker from './pages/EvidenceLocker';
 import AppShell from './components/AppShell';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -40,6 +41,7 @@ export default function App() {
         <Route path="risk" element={<RiskAnomalies />} />
         <Route path="images" element={<ImageAnalysis />} />
         <Route path="assistant" element={<AIAssistant />} />
+        <Route path="evidence" element={<EvidenceLocker />} />
         <Route path="explain" element={<Explainability />} />
       </Route>
 

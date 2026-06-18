@@ -1,13 +1,14 @@
-name: E2E Test Report
+name: Aiventra Complete Test Suite & Reports
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-  e2e-tests:
+  run-tests:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -47,18 +48,41 @@ jobs:
         sudo apt-get install -y xvfb
         xvfb-run --auto-servernum python "Vulnerability Test Results/e2e_selenium_tests.py"
 
-    - name: Upload E2E Test Report
+    - name: Run Security Test Report Generation
+      run: |
+        python "Vulnerability Test Results/generate_excel.py"
+
+    - name: Run Appium E2E Tests (Simulation Mode)
+      run: |
+        python "aiventra-android/appium_tests/appium_e2e_tests.py"
+
+    - name: Run Baseline/Load Testing Report Generation
+      run: |
+        python "Vulnerability Test Results/run_load_test.py"
+
+    - name: Create Reports ZIP Directory
+      run: |
+        mkdir -p test-reports
+        cp "Vulnerability Test Results/E2E_Test_Results.xlsx" test-reports/
+        cp "Vulnerability Test Results/Security_Test_Results.xlsx" test-reports/
+        cp "aiventra-android/appium_tests/Appium_Test_Results.xlsx" test-reports/
+        cp "Vulnerability Test Results/Load_Testing_Results.xlsx" test-reports/
+
+    - name: Upload Complete Test Reports ZIP
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: E2E-Test-Results
-        path: "Vulnerability Test Results/E2E_Test_Results.xlsx"
+        name: Aiventra-Complete-Test-Reports
+        path: test-reports/
 
-    - name: Commit and Push E2E Report to GitHub
+    - name: Commit and Push Updated Reports to GitHub
       if: always()
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git add "Vulnerability Test Results/E2E_Test_Results.xlsx"
-        git commit -m "Auto-update E2E Test Report [skip ci]" || echo "No changes to commit"
+        git add "Vulnerability Test Results/Security_Test_Results.xlsx"
+        git add "aiventra-android/appium_tests/Appium_Test_Results.xlsx"
+        git add "Vulnerability Test Results/Load_Testing_Results.xlsx"
+        git commit -m "Auto-update all test report Excel sheets [skip ci]" || echo "No changes to commit"
         git push

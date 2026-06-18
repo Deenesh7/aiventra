@@ -10,6 +10,7 @@ import {
   MessageSquare,
   ShieldAlert,
   Network,
+  Package,
   LogOut,
   Settings,
 } from 'lucide-react';
@@ -26,6 +27,7 @@ const navItems = [
   { to: '/app/map', icon: Map, label: 'Crime Scene Map' },
   { to: '/app/risk', icon: ShieldAlert, label: 'Risk & Anomalies' },
   { to: '/app/images', icon: ImageIcon, label: 'Image Analysis' },
+  { to: '/app/evidence', icon: Package, label: 'Evidence Locker' },
   { to: '/app/assistant', icon: MessageSquare, label: 'AI Assistant' },
   { to: '/app/explain', icon: Brain, label: 'Explainability' },
 ];
