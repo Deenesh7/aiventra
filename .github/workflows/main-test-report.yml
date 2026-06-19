@@ -1,4 +1,4 @@
-name: Aiventra Complete Test Suite & Reports
+name: Main Test Report
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-tests:
+  run-main-test-report:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -60,6 +60,10 @@ jobs:
       run: |
         python "Vulnerability Test Results/run_load_test.py"
 
+    - name: Generate Consolidated Test Summary
+      run: |
+        python "Vulnerability Test Results/generate_summary.py"
+
     - name: Create Reports ZIP Directory
       run: |
         mkdir -p test-reports
@@ -67,6 +71,7 @@ jobs:
         cp "Vulnerability Test Results/Security_Test_Results.xlsx" test-reports/
         cp "aiventra-android/appium_tests/Appium_Test_Results.xlsx" test-reports/
         cp "Vulnerability Test Results/Load_Testing_Results.xlsx" test-reports/
+        cp "Vulnerability Test Results/Executive_Summary.md" test-reports/
 
     - name: Upload Complete Test Reports ZIP
       if: always()
@@ -84,5 +89,6 @@ jobs:
         git add "Vulnerability Test Results/Security_Test_Results.xlsx"
         git add "aiventra-android/appium_tests/Appium_Test_Results.xlsx"
         git add "Vulnerability Test Results/Load_Testing_Results.xlsx"
-        git commit -m "Auto-update all test report Excel sheets [skip ci]" || echo "No changes to commit"
+        git add "Vulnerability Test Results/Executive_Summary.md"
+        git commit -m "Auto-update all test reports and executive summary [skip ci]" || echo "No changes to commit"
         git push
