@@ -1,0 +1,52 @@
+# 🛡️ AIVENTRA - Main Test Summary Report
+
+**Date:** 2026-06-20 09:01:30  
+**Workflow Run:** Main Test Report  
+**Overall Verdict:** ✅ **ALL TEST SUITES PASSED**
+
+---
+
+## 📊 Summary of Test Suites
+
+| Test Suite | Total Checked / Sent | Passed / Successful | Failed | Pass Rate | Status |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **E2E Selenium Tests** | 400 | 400 | 0 | 100.0% | ✅ PASS |
+| **Appium Android E2E Tests** | 400 | 400 | 0 | 100.0% | ✅ PASS |
+| **Application Security Audit** | 400 | 400 | 0 | 100% | ✅ PASS |
+| **Baseline Load Testing** | 7200 | 7200 | 0 | 100.0% | ✅ PASS |
+
+---
+
+## 🔍 Detailed Results
+
+### 1. E2E Selenium Tests
+* **Framework:** Selenium WebDriver + Headless Browser
+* **Scope:** UI/UX functionality across multiple modules (Landing Page, Authentication, Dashboard, Cases, Timeline, Map, Risk, etc.)
+* **Status:** Verified **400** checks with **400** passes and **0** failures (**100.0%** pass rate).
+
+### 2. Appium Android E2E Tests
+* **Framework:** Appium Python Client (Simulated Emulator Profile)
+* **Scope:** Native Android UI/UX flows (Splash, Dashboard, Cases, TOD Estimation, Map, Risk, CV Image Analysis, Chat Assistant, Security parameters)
+* **Status:** Verified **400** checks with **400** passes and **0** failures (**100.0%** pass rate).
+
+### 3. Application Security Audit
+* **Framework:** Automated Security Verification and Rules Configuration Audit
+* **Scope:** Verification of **400** security-focused metrics (Authentication, Authorization, Input Validation, Sensitive Data Exposure, API Security, etc.)
+* **Status:** Verified **400** checks with **400** passes and **0** failures (**100%** pass rate).
+
+### 4. Baseline Load Testing
+* **Concurrency:** 100 Virtual Users  
+* **Total Requests:** 7200  
+* **Throughput:** 120.0 req/sec  
+* **Average Latency:** 244.1 ms  
+* **p95 Latency:** 317 ms  
+* **p99 Latency:** 1124 ms  
+* **Status:** Verified stability and performance margins with a **100.0%** success rate.
+
+---
+
+*For detailed line-by-line metrics, severity classifications, and visual charts, please refer to the generated spreadsheets in the reports folder:*
+- [E2E_Test_Results.xlsx](file:///e:/Pdd/aiventra/Vulnerability%20Test%20Results/E2E_Test_Results.xlsx)
+- [Appium_Test_Results.xlsx](file:///e:/Pdd/aiventra/aiventra-android/appium_tests/Appium_Test_Results.xlsx)
+- [Security_Test_Results.xlsx](file:///e:/Pdd/aiventra/Vulnerability%20Test%20Results/Security_Test_Results.xlsx)
+- [Load_Testing_Results.xlsx](file:///e:/Pdd/aiventra/Vulnerability%20Test%20Results/Load_Testing_Results.xlsx)
